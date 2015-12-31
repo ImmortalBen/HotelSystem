@@ -125,7 +125,8 @@ class BookController extends Controller
             $model->room_id = $id;
             $model->date_create = date('y-m-d', time());
             $room = Room::findOne($id);
-            $model->price = $room->price;
+            $totalPrice = (strtotime($model->date_to) - strtotime($model->date_from)) / (24 * 3600);
+            $model->price = $totalPrice * $room->price;
             if ($model->save()){
                 $room->status = 1;
                 $room->name = $model->name;
